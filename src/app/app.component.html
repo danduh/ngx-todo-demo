@@ -1,0 +1,8 @@
+<section class="todoapp">
+    <header class="header">
+        <h1>todos</h1>
+        <td-task-input (onInput)="addTask($event)"></td-task-input>
+    </header>
+
+    {{todosList|async|json }}
+</section>
