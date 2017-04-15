@@ -3,6 +3,9 @@
         <h1>todos</h1>
         <td-task-input (onInput)="addTask($event)"></td-task-input>
     </header>
+    <section class="main" *ngIf="!!todosList">
+        <td-todos-list [todosList]="todosList"></td-todos-list>
+    </section>
 
-    {{todosList|async|json }}
+    <td-footer [todosList]="todosList"></td-footer>
 </section>

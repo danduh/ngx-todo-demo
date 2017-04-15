@@ -1,23 +1,29 @@
 import { Reducer, Action } from "@ngrx/store";
 export const ADD_TODO = 'ADD_TODO';
+export const DELETE_TODO = 'DELETE_TODO';
+export const TOGGLE_TODO = 'TOGGLE_TODO';
 
 const todo = (state, action) => {
     switch (action.type) {
         case ADD_TODO:
             return action.payload;
 
-        case 'TOGGLE_TODO':
-            if (state.id !== action.id) {
+        case TOGGLE_TODO:
+            if (state.id !== action.payload.id) {
                 return state
             }
 
             return {
                 ...state,
                 completed: !state.completed
-            }
+            };
         default:
             return state
     }
+};
+
+const deleteTodo = (state, action) => {
+    return state.filter((s) => s.id !== action.payload.id);
 };
 
 export const todosReducer = (state: Object[] = [], action: Action) => {
@@ -26,11 +32,16 @@ export const todosReducer = (state: Object[] = [], action: Action) => {
             return [
                 ...state,
                 todo(undefined, action)
-            ]
-        case 'TOGGLE_TODO':
+            ];
+
+        case DELETE_TODO:
+            return [...deleteTodo(state, action)];
+
+        case TOGGLE_TODO:
             return state.map((t) =>
                 todo(t, action)
-            )
+            );
+
         default:
             return state
     }

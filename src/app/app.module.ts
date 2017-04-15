@@ -10,6 +10,9 @@ import { TaskInputComponent } from './components/task-input/task-input.component
 import { StoreModule } from "@ngrx/store";
 import { todosReducer } from "./shared/reducers/todos";
 import { TodoService } from "./shared/todo.service";
+import { TodosListComponent } from './components/todos-list/todos-list.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { TodosFilterPipe } from './pipes/todos-filter.pipe';
 
 
 export function todosReducerFc(state: any, action: any) {
@@ -19,7 +22,10 @@ export function todosReducerFc(state: any, action: any) {
 @NgModule({
     declarations: [
         AppComponent,
-        TaskInputComponent
+        TaskInputComponent,
+        TodosListComponent,
+        FooterComponent,
+        TodosFilterPipe
     ],
     imports: [
         StoreModule.provideStore(todosReducerFc),
