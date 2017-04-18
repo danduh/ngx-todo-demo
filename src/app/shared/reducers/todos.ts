@@ -2,6 +2,8 @@ import { Reducer, Action } from "@ngrx/store";
 export const ADD_TODO = 'ADD_TODO';
 export const DELETE_TODO = 'DELETE_TODO';
 export const TOGGLE_TODO = 'TOGGLE_TODO';
+export const FILTER_TODOS = 'FILTER_TODOS';
+
 
 const todo = (state, action) => {
     switch (action.type) {
@@ -26,6 +28,10 @@ const deleteTodo = (state, action) => {
     return state.filter((s) => s.id !== action.payload.id);
 };
 
+const filterTodos = (state, action) => {
+    return state.filter((s) => s.id !== action.payload.id);
+};
+
 export const todosReducer = (state: Object[] = [], action: Action) => {
     switch (action.type) {
         case ADD_TODO:
@@ -40,6 +46,11 @@ export const todosReducer = (state: Object[] = [], action: Action) => {
         case TOGGLE_TODO:
             return state.map((t) =>
                 todo(t, action)
+            );
+
+        case FILTER_TODOS:
+            return state.filter((t) =>
+                !!t[action.payload]
             );
 
         default:
