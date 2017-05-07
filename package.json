@@ -6,6 +6,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "start-aot": "ng serve --aot=true",
     "test": "ng test",
     "pree2e": "webdriver-manager update --standalone false --gecko false",
     "e2e": "protractor"
@@ -23,8 +24,10 @@
     "@angular/platform-browser-dynamic": "^4.0.2",
     "@angular/router": "^4.0.2",
     "@ngrx/core": "^1.2.0",
+    "@ngrx/effects": "^2.0.3",
     "@ngrx/store": "^2.2.1",
     "core-js": "^2.4.1",
+    "ngrx-store-localstorage": "^0.1.6",
     "rxjs": "^5.0.1",
     "todomvc-app-css": "^2.1.0",
     "todomvc-common": "^1.0.3",

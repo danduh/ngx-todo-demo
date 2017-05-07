@@ -1,21 +1,32 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { TodoType } from "../../app.typings";
-import { TodoService } from "../../shared/todo.service";
+import { TodoFacade } from "../../shared/state-core-module/todo-facade";
+import { Subscription } from "rxjs";
 
 @Component({
     selector: 'td-footer',
     templateUrl: './footer.component.html',
     styleUrls: ['./footer.component.scss']
 })
-export class FooterComponent implements OnInit {
-    @Input('todosList') todosList: TodoType[] = [];
-    completed: number;
+export class FooterComponent implements OnInit, OnDestroy {
+    @Input('todosList')
+    public todosList: TodoType[] = [];
 
-    constructor(private todoService: TodoService) {
+    completed: TodoType[];
+    $subscriber: Subscription;
+
+    constructor(private todoService: TodoFacade) {
+        this.$subscriber = this.todoService.getFilteredBy('completed')
+            .subscribe((resp: TodoType[]) => {
+                this.completed = resp
+            })
     }
 
     ngOnInit() {
-        this.todoService.getFilteredBy('completed')
     }
 
+    ngOnDestroy() {
+        if (this.$subscriber)
+            this.$subscriber.unsubscribe()
+    }
 }

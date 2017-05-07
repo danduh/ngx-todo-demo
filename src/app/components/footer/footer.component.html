@@ -1,5 +1,20 @@
-<footer class="footer" *ngIf="todosList.length > 0">
+<footer class="footer" *ngIf="!!todosList && todosList.length > 0">
     <span class="todo-count">
-        <strong>{{todosList.length}}</strong> {{todosList.length == 1 ? 'item' : 'items'}} left
+        <strong>{{todosList.length}}</strong>
+        <ng-container [ngPlural]="todosList.length">
+            <ng-template ngPluralCase="=0">items</ng-template>
+            <ng-template ngPluralCase="=1">item</ng-template>
+            <ng-template ngPluralCase="other">items</ng-template>
+        </ng-container>
+        total
+    </span>
+    <span class="todo-count">
+        <strong>{{completed.length}}</strong>
+        <ng-container [ngPlural]="completed.length">
+            <ng-template ngPluralCase="=0">items</ng-template>
+            <ng-template ngPluralCase="=1">item</ng-template>
+            <ng-template ngPluralCase="other">items</ng-template>
+        </ng-container>
+        completed
     </span>
 </footer>
