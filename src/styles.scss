@@ -1,1 +1,14 @@
 @import "~todomvc-app-css/index.css";
+
+html, body {
+    height: 100%;
+    max-width: none !important;
+}
+
+body {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}

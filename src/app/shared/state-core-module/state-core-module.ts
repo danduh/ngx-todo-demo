@@ -1,33 +1,25 @@
-import { NgModule } from '@angular/core';
-import { StoreModule, combineReducers } from "@ngrx/store";
-import { EffectsModule } from "@ngrx/effects";
-import { TodosReducer } from "./todos-reducer";
-import { TodoFacade } from "./todo-facade";
-import { StatesEffects } from "./state-effects";
-import { compose } from "@ngrx/core";
-import { localStorageSync } from "ngrx-store-localstorage";
+import {NgModule} from '@angular/core';
+import {StoreModule,  ActionReducerMap, ActionReducer, MetaReducer} from '@ngrx/store';
+import {EffectsModule} from '@ngrx/effects';
+import {TodosReducer} from './todos-reducer';
+import {TodoFacade} from './todo-facade';
+import {StatesEffects} from './state-effects';
+import {localStorageSync} from 'ngrx-store-localstorage';
 
-export const EAGER_REDUCERS = {
-    todosReducer: TodosReducer
-};
 
-export function createReducer(asyncReducers = {}) {
-    let allReducers = Object.assign(EAGER_REDUCERS, asyncReducers);
-    return combineReducers(allReducers);
+const reducers: ActionReducerMap<any> = {todosReducer: TodosReducer};
+
+export function localStorageSyncReducer(reducer: ActionReducer<any>): ActionReducer<any> {
+    return localStorageSync({keys: ['todos']})(reducer);
 }
 
-export function appReducer(state: any, action: any) {
-    return createReducer()(state, action);
-}
+const metaReducers: Array<MetaReducer<any, any>> = [localStorageSyncReducer];
 
-export function l() {
-    return compose(localStorageSync(['todosReducer'], true), combineReducers)(EAGER_REDUCERS);
-}
 
 @NgModule({
     imports: [
-        EffectsModule.run(StatesEffects),
-        StoreModule.provideStore(compose(localStorageSync(['todosReducer'], true), combineReducers)(EAGER_REDUCERS))
+        EffectsModule.forRoot([StatesEffects]),
+        StoreModule.forRoot(reducers, {metaReducers})
     ],
     providers: [
         TodoFacade
