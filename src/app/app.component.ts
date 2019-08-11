@@ -1,7 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { TodoType } from "./app.typings";
-import { TodoFacade } from "./shared/state-core-module/todo-facade";
-import { Subscription } from "rxjs";
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {TodoType} from './app.typings';
+import {TodoFacade} from './shared/state-core-module/todo-facade';
+import {Subscription} from 'rxjs';
 
 @Component({
     selector: 'app-root',
@@ -19,18 +19,19 @@ export class AppComponent implements OnInit, OnDestroy {
     ngOnInit() {
         this.state$ = this.todoFacade.getAllTodos()
             .subscribe((resp) => {
-                this.todosList = resp
-            })
+                this.todosList = resp;
+            });
     }
 
     public addTask($event) {
         let _todo = new TodoType($event);
 
-        this.todoFacade.addTodo(_todo)
+        this.todoFacade.addTodo(_todo);
     }
 
     ngOnDestroy() {
-        if (!!this.state$)
+        if (!!this.state$) {
             this.state$.unsubscribe()
+        }
     }
 }
